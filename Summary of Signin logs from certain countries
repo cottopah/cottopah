@@ -1,0 +1,6 @@
+SigninLogs
+| where TimeGenerated > ago(1000d)
+| where Location has "SY" or Location has "CU" or Location has "KP" or Location has "IR" or Location has "UA"
+| summarize arg_max(TimeGenerated,*) by UserPrincipalName
+| summarize AuthCount = count() by Location
+| sort by AuthCount desc
