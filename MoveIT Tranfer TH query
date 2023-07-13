@@ -1,0 +1,20 @@
+> To check what logs are available.
+search "moveit"
+| summarize count
+
+> A process-based approach to check the activities in Defender, then list the affected devices.
+
+DeviceProcessEvents
+| where ActionType == "ProcessCreated"
+| where InitiatingProcessParentFileName contains "w3wp.exe"
+| where InitiatingProcessFileName contains "csc.exe"
+| where InitiatingProcessCommandLine contains "moveit"
+| summarize count()by DeviceName
+
+References:
+
+> https://github.com/curated-intel/MOVEit-Transfer
+
+> https://github.com/tsale/Sigma_rules/blob/main/Threat%20Hunting%20Queries/MOVEit_exploitation.yml
+
+> https://github.com/cyb3rmik3/KQL-threat-hunting-queries/blob/main/01.%20Threat%20Hunting/MOVEit-exploit-hunting.md
